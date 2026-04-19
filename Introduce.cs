@@ -17,12 +17,24 @@ public class Introduce
 
         //Console.WriteLine(laSinhVien);
 
-        Console.WriteLine("Nhap ten cua ban: ");
-        string name = Console.ReadLine();
-        Console.WriteLine("Nhap tuoi: ");
-        int age = Convert.ToInt32(Console.ReadLine());
-        Console.WriteLine("Xin chao " + name);
-        Console.WriteLine("Ban " + age + " tuoi");
 
+
+        //Console.WriteLine("Nhap ten cua ban: ");
+        //string name = Console.ReadLine();
+        //Console.WriteLine("Nhap tuoi: ");
+        //int age = Convert.ToInt32(Console.ReadLine());
+        //Console.WriteLine("Xin chao " + name);
+        //Console.WriteLine("Ban " + age + " tuoi");
+
+
+
+        Console.Write("Nhap diem thi: ");
+        string input = Console.ReadLine();
+        double diem = Convert.ToDouble(input); // Chuyển chữ thành số thực
+
+        // Bước tiếp theo: Kiểm tra logic
+        bool laDat = (diem >= 5);
+
+        Console.WriteLine("Ket qua dat: " + laDat);
     }
 }

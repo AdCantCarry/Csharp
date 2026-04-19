@@ -6,6 +6,7 @@
     <RootNamespace>C__tutorial</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+    <StartupObject>If_else</StartupObject>
   </PropertyGroup>
 
 </Project>
