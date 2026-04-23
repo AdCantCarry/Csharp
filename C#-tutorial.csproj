@@ -6,7 +6,7 @@
     <RootNamespace>C__tutorial</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <StartupObject>If_else</StartupObject>
+    <StartupObject>C__tutorial.loop_for</StartupObject>
   </PropertyGroup>
 
 </Project>
