@@ -6,7 +6,7 @@
     <RootNamespace>C__tutorial</RootNamespace>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <StartupObject>C__tutorial.Method</StartupObject>
+    <StartupObject>C__tutorial.Exercise</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
