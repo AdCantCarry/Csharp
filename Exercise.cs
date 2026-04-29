@@ -1,79 +1,89 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace C__tutorial
 {
     internal class Exercise
     {
+        // Hàm tính giá bán
         public static double TinhGiaBan(double giaGoc, double chietKhau)
         {
             return giaGoc * (1 - chietKhau);
         }
+
         static void Main()
         {
             Console.OutputEncoding = System.Text.Encoding.UTF8;
 
-            // Đưa mảng vào trong Main hoặc để Static ở ngoài class
             string[] brands = { "Acer Nitro 5", "Macbook M2", "Dell XPS" };
-            int[] inventory = { 10, 0, 3 }; // Thử cho 1 cái bằng 0
+            int[] inventory = { 10, 0, 3 };
             double[] discount = { 0.1, 0.15, 0.2 };
 
-            // --- BƯỚC 1: IN DANH SÁCH ---
-            Console.WriteLine("DANH SÁCH SẢN PHẨM TRONG KHO:");
-            for (int i = 0; i < brands.Length; i++)
+            while (true)
             {
-                string tinhTrang = (inventory[i] > 0) ? "CÒN HÀNG" : "HẾT HÀNG";
-                Console.WriteLine($"{i + 1}. {brands[i]} - {tinhTrang} ({inventory[i]} máy)");
-            }
-
-            // --- BƯỚC 2: MUA HÀNG ---
-            Console.Write("\nNhập số thứ tự máy bạn muốn mua (1-3): ");
-            int choice = int.Parse(Console.ReadLine()) - 1; // Trừ 1 để khớp với chỉ số mảng 0, 1, 2
-
-            // Duy hãy thử dùng If-Else hoặc Switch Case để kiểm tra:
-            // 1. Nếu choice hợp lệ và còn hàng thì gọi hàm TinhGiaBan.
-            // 2. Nếu hết hàng thì báo "Xin lỗi, máy này đã hết".
-            // 1. Kiểm tra xem số người dùng nhập có nằm trong danh sách không (tránh lỗi văng app)
-            if (choice >= 0 && choice < brands.Length)
-            {
-                // 2. Kiểm tra xem máy đó còn hàng không
-                if (inventory[choice] > 0)
+                Console.WriteLine("\n-------------------------------------------");
+                Console.WriteLine("DANH SÁCH SẢN PHẨM TRONG KHO:");
+                for (int i = 0; i < brands.Length; i++)
                 {
-                    // Giả lập giá gốc cho từng loại máy (Duy có thể dùng mảng double[] giaGoc để chuyên nghiệp hơn)
-                    double giaGoc = 0;
-                    switch (choice)
+                    string tinhTrang = (inventory[i] > 0) ? "CÒN HÀNG" : "HẾT HÀNG";
+                    Console.WriteLine($"{i + 1}. {brands[i]} - {tinhTrang} ({inventory[i]} máy)");
+                }
+
+                Console.Write("\nNhập số thứ tự (1-3) để mua, hoặc gõ 'thoat' để dừng: ");
+                string input = Console.ReadLine();
+
+                // 1. Kiểm tra lệnh thoát
+                if (input.ToLower() == "thoat")
+                {
+                    Console.WriteLine("Cảm ơn Duy đã sử dụng hệ thống. Tạm biệt!");
+                    break;
+                }
+
+                // 2. Chuyển đổi đầu vào sang số
+                if (int.TryParse(input, out int choiceNumber))
+                {
+                    int choice = choiceNumber - 1; // Khớp với index mảng
+
+                    // 3. Kiểm tra số thứ tự có hợp lệ không (1-3)
+                    if (choice >= 0 && choice < brands.Length)
                     {
-                        case 0: giaGoc = 20000000; break; // Acer
-                        case 1: giaGoc = 35000000; break; // Macbook
-                        case 2: giaGoc = 30000000; break; // Dell
+                        // 4. Kiểm tra còn hàng không
+                        if (inventory[choice] > 0)
+                        {
+                            double giaGoc = 0;
+                            switch (choice)
+                            {
+                                case 0: giaGoc = 20000000; break;
+                                case 1: giaGoc = 35000000; break;
+                                case 2: giaGoc = 30000000; break;
+                            }
+
+                            // Tính toán và in kết quả
+                            double giaCuoi = TinhGiaBan(giaGoc, discount[choice]);
+
+                            Console.WriteLine($"\nBạn đã chọn mua: {brands[choice]}");
+                            Console.WriteLine($"   Giá gốc: {giaGoc:N0} VND");
+                            Console.WriteLine($"   Chiết khấu: {discount[choice] * 100}%");
+                            Console.WriteLine($"   Số tiền cần thanh toán: {giaCuoi:N0} VND");
+
+                            // Trừ tồn kho
+                            inventory[choice]--;
+                            Console.WriteLine($"   Số lượng còn lại: {inventory[choice]} máy.");
+                        }
+                        else
+                        {
+                            Console.WriteLine($"\nXin lỗi máy {brands[choice]} hiện đang HẾT HÀNG!");
+                        }
                     }
-
-                    // 3. Gọi hàm TinhGiaBan đã viết ở trên
-                    double giaCuoi = TinhGiaBan(giaGoc, discount[choice]);
-
-                    Console.WriteLine($"\nBạn đã chọn mua: {brands[choice]}");
-                    Console.WriteLine($"Giá gốc: {giaGoc:N0} VND"); // :N0 để định dạng dấu phẩy phân cách phần nghìn
-                    Console.WriteLine($"Chiết khấu: {discount[choice] * 100}%");
-                    Console.WriteLine($"Số tiền cần thanh toán: {giaCuoi:N0} VND");
-
-                    // 4. (Nâng cao) Trừ tồn kho sau khi bán thành công
-                    inventory[choice]--;
-                    Console.WriteLine($"Số lượng còn lại trong kho: {inventory[choice]} máy.");
+                    else
+                    {
+                        Console.WriteLine("\nLựa chọn không hợp lệ (Chỉ nhập từ 1 đến 3).");
+                    }
                 }
                 else
                 {
-                    Console.WriteLine($"\nXin lỗi Duy, máy {brands[choice]} hiện đang HẾT HÀNG!");
+                    Console.WriteLine("\nVui lòng nhập số hoặc chữ 'thoat'.");
                 }
             }
-            else
-            {
-                Console.WriteLine("\nLựa chọn không hợp lệ. Vui lòng chạy lại và nhập từ 1 đến 3.");
-            }
-
-            Console.WriteLine("\nCảm ơn bạn đã sử dụng hệ thống!");
         }
     }
 }
